@@ -30,23 +30,29 @@ body {display: -ms-flexbox;display: -webkit-box;display: flex;-ms-flex-align: ce
 
             </div>
             <div class="col-6 ">
+                {% for error_message in get_flashed_messages() %}
+                    <div class="alert alert-warning" role="alert">
+
+                        {{ error_message }}
+                    </div>
+                {% endfor %}
                 <div class="card ">
                     <div class="card-header text-center">
                         用户注册
                     </div>
                     <div class="card-body">
-                    <form>
+                    <form action="{{ url_for('auth.register') }}" method="post">
                         <div class="form-group">
                             <label for="exampleInputUsername">请输入用户名</label>
-                            <input type="email" class="form-control" id="exampleInputUsername"  placeholder="Enter username">
+                            <input type="text" class="form-control" id="exampleInputUsername" name="username" placeholder="Enter username">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail">请输入邮箱</label>
-                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+                            <input type="email" class="form-control" id="exampleInputEmail" name="email" placeholder="Enter email">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword">请输入密码</label>
-                            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="exampleInputPassword" name="password" placeholder="Password">
                         </div>
                         <input type="submit" value="确认注册" class="btn btn-primary">
                     </form>
