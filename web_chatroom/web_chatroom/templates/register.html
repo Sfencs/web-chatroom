@@ -54,6 +54,7 @@ body {display: -ms-flexbox;display: -webkit-box;display: flex;-ms-flex-align: ce
                             <label for="exampleInputPassword">请输入密码</label>
                             <input type="password" class="form-control" id="exampleInputPassword" name="password" placeholder="Password">
                         </div>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <input type="submit" value="确认注册" class="btn btn-primary">
                     </form>
 

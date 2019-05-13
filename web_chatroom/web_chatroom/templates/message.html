@@ -1,0 +1,11 @@
+<div class="msg-box mt-3">
+    <div class="picture">
+        <img class="pop-card" data-position="right center" data-offset="-40"
+        src="{{ message.author.avatar_url }}">
+    </div>
+    <div class="msg">
+        <span class="nickname">{{ message.author.username }}</span>
+        <small class="timestamp">{{ message.create_time }}</small>
+        <span class="message-body">{{ message.content|safe }}</span>
+    </div>
+</div>

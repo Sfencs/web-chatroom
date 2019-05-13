@@ -1,10 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <title>蛛网网页聊天室</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='semantic-ui/semantic.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.z01.com/v4/dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="//code.z01.com/v4/dist/css/zico.min.css" >
+    <style>
+
+        .box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+}
+        .inputarea{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 95px;
+            width: 100%;
+            background: #f6f6f6;
+            color: #a1a1a1;
+            padding: 10px;
+
+        }
+        .message-body {
+            display: block;
+            padding-top: 5px;
+            font-size: 14px;
+            color: #222;
+        }
+
+
+        .msg-box .picture {
+            float: left;
+            width: 50px;
+            display: block;
+            padding-right: 15px;
+            margin-right: 10px;
+        }
+
+        .ellipsis-icon {
+            position: absolute;
+            display: inline-block;
+            visibility: hidden;
+            vertical-align: top;
+        }
+
+        .profile-card {
+            max-width: 220px;
+        }
+
+        .nickname {
+            color: #555;
+            font-weight: bold;
+        }
+
+
+
+
+        .msg-box:hover > .ellipsis-icon {
+    visibility: visible;
+}
+
+        .picture img {
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+        }
+
+        .msg {
+            background: #ECECEC;
+            display: inline-block;
+            padding: 12px;
+            width: auto;
+            max-width: 80%;
+            border-radius: 2px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .msg img {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+        }
+
+        .msg:before {
+            content: "";
+            position: absolute;
+            display: block;
+            left: 0;
+            border-right: 6px solid #ECECEC;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            top: 10px;
+            margin-left: -6px;
+        }
+    </style>
 </head>
 <body>
-聊天室
+
+    <!--头-->
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <img src="{{ url_for('static', filename='logo.png') }}">
+        <h5 class=" ml-4 my-0 mr-md-auto font-weight-normal">蛛网网页聊天室</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">
+                {% if current_user.is_authenticated %}
+                    Hi {{ current_user.username }}!
+                {% endif %}
+            </a>
+            <a class="p-2 text-dark" href="#">
+                {% if current_user.is_authenticated %}
+                    <img src="{{ current_user.avatar_url}}">
+                {% endif %}
+            </a>
+
+        </nav>
+        <a class="btn btn-outline-primary" href="{{ url_for('auth.logout') }}">logout</a>
+    </div>
+
+
+
+
+
+
+
+    <!--消息-->
+    <div id="message_container" style="margin-bottom: 95px" class="container bg-light mt-2 ">
+
+        {% for message in message_list %}
+            <div class="msg-box mt-3">
+                <div class="picture">
+                    <img class="pop-card" data-position="right center" data-offset="-40"
+                    src="{{ message.author.avatar_url }}">
+                </div>
+                <div class="msg">
+                    <span class="nickname">{{ message.author.username }}</span>
+                    <small class="timestamp">{{ message.create_time }}</small>
+                    <span class="message-body">{{ message.content|safe }}</span>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--输入框-->
+    <div class="inputarea">
+
+        <div class="row flex-nowrap justify-content-between align-items-center mb-3">
+            <div class="col-2 pt-1">
+
+            </div>
+            <div class="col-8 ">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">请输入内容</span>
+                  </div>
+                  <textarea id="text_area" class="form-control" aria-label="请输入内容"></textarea>
+                    <button class=" ml-2 btn btn-lg btn-primary" id="send_button" >发送</button>
+                </div>
+            </div>
+
+            <div class="col-8 d-flex justify-content-end align-items-center">
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <script src="{{ url_for('static', filename='semantic-ui/semantic.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        var socket = io('/')
+        $(function () {
+
+        send()
+        get()
+
+    })
+
+        function send() {
+    //点击发送按钮
+        $('#send_button').click(function () {
+         var content = $('#text_area').val().trim();
+         if (content==""){
+
+         }else {
+             socket.emit('new_message',content);
+             $('#text_area').val("")
+         }
+
+
+
+
+        })
+ }
+        function get() {
+            socket.on('new_message',function (data) {
+                $('#message_container').append(data.message_html);
+                scrollToEnd();
+
+            })
+        }
+
+        function scrollToEnd() {//滚动到底部
+            var h = $(document).height() - $(window).height();
+            $(document).scrollTop(h);
+        }
+
+
+
+
+
+    </script>
+
+
 </body>
 </html>
