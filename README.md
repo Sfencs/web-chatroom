@@ -1,4 +1,5 @@
 # web-chatroom
-网页聊天室
+基于flask的网页聊天室
 
-![1557761306838](/home/huchengyue/github/web-chatroom/web_chatroom/web_chatroom/static/1557761306838.png)
+具体可查看https://www.cnblogs.com/sfencs-hcy/p/10841539.html
+
