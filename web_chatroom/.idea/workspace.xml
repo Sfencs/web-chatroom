@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ceef624-ac21-4856-a9aa-7150778baa7d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_chatroom/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_chatroom/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_chatroom/templates/chatroom.html" beforeDir="false" afterPath="$PROJECT_DIR$/web_chatroom/templates/chatroom.html" afterDir="false" />
-    </list>
+    <list default="true" id="4ceef624-ac21-4856-a9aa-7150778baa7d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,12 +326,12 @@
       <workItem from="1557469464281" duration="14806000" />
       <workItem from="1557554599897" duration="12340000" />
       <workItem from="1557641962879" duration="19810000" />
-      <workItem from="1557741493683" duration="7874000" />
+      <workItem from="1557741493683" duration="8186000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60686000" />
+    <option name="totallyTimeSpent" value="60998000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1030" extended-state="6" />
